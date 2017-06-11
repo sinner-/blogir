@@ -19,4 +19,5 @@ As user:
   * `cd $GOPATH/src/github.com/sinner-/blogir`
   * `go get`
   * `go install`
+  * Optionally, edit blogirrc env vars and `source blogirrc`
   * `blogir`
