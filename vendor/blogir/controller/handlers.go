@@ -5,13 +5,19 @@ import (
     "errors"
     "net/http"
     "log"
+    "regexp"
     "blogir/model"
 )
+
+var validTitle = regexp.MustCompile("([A-Za-z0-9]+)$")
 
 func getTitle(url string, path string) (string, error) {
     title := url[len(path):]
     if len(title) < 1 {
         return "", errors.New("No title specified.")
+    }
+    if !validTitle.MatchString(title) {
+        return "", errors.New("Malformed title.")
     }
     return title, nil
 }
