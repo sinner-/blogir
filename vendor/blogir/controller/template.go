@@ -1,26 +1,19 @@
 package controller
 
 import (
+    "log"
+    "fmt"
     "html/template"
     "net/http"
-    "log"
     "blogir/model"
-    "fmt"
 )
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *model.Page) {
-    t, err := template.ParseFiles(fmt.Sprintf("templates/%s.html", tmpl))
-    if err != nil {
-        log.Print(err.Error())
-        http.Error(w, "HTTP 500", http.StatusInternalServerError)
-        return
-    }
+var templates = template.Must(template.ParseGlob("templates/*.html"))
 
-    err = t.Execute(w, p)
+func renderTemplate(w http.ResponseWriter, tmpl string, p *model.Page) {
+    err := templates.ExecuteTemplate(w, fmt.Sprintf("%s.html", tmpl), p)
     if err != nil {
         log.Print(err.Error())
         http.Error(w, "HTTP 500", http.StatusInternalServerError)
     }
 }
-
-
