@@ -23,11 +23,7 @@ func getTitle(url string, path string) (string, error) {
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
-    title, err := getTitle(r.URL.Path, "/edit/")
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusNotFound)
-        return
-    }
+    title, err := getTitle(r.URL.Path, "/view/")
     if err != nil {
         http.Error(w, err.Error(), http.StatusNotFound)
         return
@@ -41,7 +37,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
-    title, err := getTitle(r.URL.Path, "/edit/")
+    title, err := getTitle(r.URL.Path, "/save/")
     if err != nil {
         http.Error(w, err.Error(), http.StatusNotFound)
         return
