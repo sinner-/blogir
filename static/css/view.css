@@ -11,8 +11,7 @@ body {
 }
 
 #edit:hover {
-    background-color: black;
-    color: white;
+    background-color: gray;
 }
 
 #recent {
@@ -27,7 +26,10 @@ body {
 }
 
 #recent li:hover {
-    background-color: black;
-    color: white;
+    background-color: gray;
     font-weight: bold;
+}
+
+a:visited {
+    color: black;
 }
