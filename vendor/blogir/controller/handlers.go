@@ -22,6 +22,10 @@ func getTitle(url string, path string) (string, error) {
     return title, nil
 }
 
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    http.Redirect(w, r, "/view/index", http.StatusFound)
+}
+
 func viewHandler(w http.ResponseWriter, r *http.Request) {
     title, err := getTitle(r.URL.Path, "/view/")
     if err != nil {
