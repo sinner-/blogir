@@ -1,3 +1,33 @@
 body {
     font-family: Arial;
 }
+
+.post {
+    width: 80%;
+    float: right;
+    padding: 10px;
+    font-size: 20;
+    white-space: pre-line;
+}
+
+#edit:hover {
+    background-color: black;
+    color: white;
+}
+
+#recent {
+    float: top;
+    width: 15%;
+    padding: 10px;
+    margin: 20px;
+}
+
+#recent li {
+    padding: 3px;
+}
+
+#recent li:hover {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}

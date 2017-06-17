@@ -5,7 +5,11 @@
     </head>
     <body>
         <h1>{{.Title}}</h1>
-        <div>{{printf "%s" .Body}}</div>
-        <p>[<a href="/edit/{{.Title}}">edit</a>]</p>
+        <div class="post">{{printf "%s" .Body}}
+            <br/><br/><br/><br/>
+            [<a id="edit" href="/edit/{{.Title}}">edit</a>]
+        </div>
+        <ul id="recent">
+        </ul>
     </body>
 </html>
