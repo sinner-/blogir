@@ -10,6 +10,7 @@ import (
 )
 
 var validTitle = regexp.MustCompile("([A-Za-z0-9]+)$")
+var validFile = regexp.MustCompile("((css|img)/[A-Za-z]+\\.[A-Za-z]{3})$")
 
 func getTitle(url string, path string) (string, error) {
     title := url[len(path):]
@@ -22,8 +23,25 @@ func getTitle(url string, path string) (string, error) {
     return title, nil
 }
 
+func getFile(url string) (string, error) {
+    file := url[len("/static/"):]
+    if !validFile.MatchString(file) {
+        return "", errors.New("Requested invalid static file.")
+    }
+    return file, nil
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/view/index", http.StatusFound)
+}
+
+func staticHandler(w http.ResponseWriter, r *http.Request) {
+    file, err := getFile(r.URL.Path)
+    if err != nil {
+        log.Print(err.Error())
+        return
+    }
+    http.ServeFile(w, r, fmt.Sprintf("static/%s", file))
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
