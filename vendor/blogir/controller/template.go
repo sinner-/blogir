@@ -10,7 +10,7 @@ import (
 
 var templates = template.Must(template.ParseGlob("templates/*.html"))
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *model.Page) {
+func renderPage(w http.ResponseWriter, tmpl string, p *model.Page) {
     err := templates.ExecuteTemplate(w, fmt.Sprintf("%s.html", tmpl), p)
     if err != nil {
         log.Print(err.Error())

@@ -55,7 +55,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
         http.Redirect(w, r, fmt.Sprintf("/edit/%s", title), http.StatusFound)
         return
     }
-    renderTemplate(w, "view", p)
+    renderPage(w, "view", p)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +86,6 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
     if err != nil {
         p = &model.Page{Title: title}
     }
-    renderTemplate(w, "edit", p)
+    renderPage(w, "edit", p)
 }
 
