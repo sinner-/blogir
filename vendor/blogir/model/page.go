@@ -7,6 +7,7 @@ import (
 type Page struct {
     Title string
     Body string
+    Recent []string
 }
 
 func (p *Page) Save() error {
@@ -15,7 +16,7 @@ func (p *Page) Save() error {
         return err
     }
 
-    _, err = db.SQL.Exec("INSERT INTO posts VALUES (?, ?)", p.Title, p.Body)
+    _, err = db.SQL.Exec("INSERT INTO posts VALUES (?, NOW(), NOW(), ?)", p.Title, p.Body)
     if err != nil {
         return err
     }
@@ -32,6 +33,12 @@ func LoadPage(title string) (*Page, error) {
 
     page := new(Page)
     page.Title = title
+
+    page.Recent, err = loadRecent()
+    if err != nil {
+        return nil, err
+    }
+
     row.Next()
     err = row.Scan(&page.Body)
     if err != nil {
