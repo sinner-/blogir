@@ -34,11 +34,6 @@ func LoadPage(title string) (*Page, error) {
     page := new(Page)
     page.Title = title
 
-    page.Recent, err = loadRecent()
-    if err != nil {
-        return nil, err
-    }
-
     row.Next()
     err = row.Scan(&page.Body)
     if err != nil {

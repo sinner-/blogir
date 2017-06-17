@@ -55,6 +55,8 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
         http.Redirect(w, r, fmt.Sprintf("/edit/%s", title), http.StatusFound)
         return
     }
+    p.Recent, err = model.LoadRecent()
+
     renderPage(w, "view", p)
 }
 

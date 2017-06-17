@@ -4,7 +4,7 @@ import (
     "blogir/db"
 )
 
-func loadRecent() ([]string, error) {
+func LoadRecent() ([]string, error) {
     rows, err := db.SQL.Query("SELECT title FROM posts ORDER BY created_at DESC LIMIT 20")
     if err != nil {
         return nil, err
