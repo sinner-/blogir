@@ -14,7 +14,7 @@ func (p *Page) Save() error {
 
     _, err := LoadPage(p.Title)
     if err == nil {
-        _, err = db.SQL.Exec("UPDATE posts SET body = ? WHERE title = ?", p.Body , p.Title)
+        _, err = db.SQL.Exec("UPDATE posts SET body = ?, updated_at = NOW() WHERE title = ?", p.Body , p.Title)
         if err != nil {
             return err
         }
