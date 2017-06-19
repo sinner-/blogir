@@ -11,14 +11,18 @@ type Page struct {
 }
 
 func (p *Page) Save() error {
-    _, err := db.SQL.Exec("DELETE FROM posts WHERE title = ?", p.Title)
-    if err != nil {
-        return err
-    }
 
-    _, err = db.SQL.Exec("INSERT INTO posts VALUES (?, NOW(), NOW(), ?)", p.Title, p.Body)
-    if err != nil {
-        return err
+    _, err := LoadPage(p.Title)
+    if err == nil {
+        _, err = db.SQL.Exec("UPDATE posts SET body = ? WHERE title = ?", p.Body , p.Title)
+        if err != nil {
+            return err
+        }
+    } else {
+        _, err = db.SQL.Exec("INSERT INTO posts VALUES (?, NOW(), NOW(), ?)", p.Title, p.Body)
+        if err != nil {
+            return err
+        }
     }
 
     return nil
