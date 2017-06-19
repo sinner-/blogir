@@ -8,6 +8,23 @@ import (
 
 var SQL *sql.DB
 
+func createSchema() error {
+    schema := `
+        CREATE TABLE IF NOT EXISTS posts (
+            title       VARCHAR(255),
+            created_at  DATETIME,
+            updated_at  DATETIME,
+            body        LONGTEXT
+        );`
+
+    _, err := SQL.Exec(schema)
+    if err != nil {
+        return err
+    }
+
+    return nil
+}
+
 func Connect(dbURL string) {
     var err error
     SQL, err = sql.Open("mysql", dbURL)
@@ -17,5 +34,9 @@ func Connect(dbURL string) {
 
     if err = SQL.Ping(); err != nil {
         log.Fatal("Couldn't connect to DB: ", err.Error())
+    }
+
+    if err = createSchema(); err != nil {
+        log.Fatal("Couldn't create DB schema: ", err.Error())
     }
 }
