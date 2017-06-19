@@ -8,6 +8,8 @@ type Page struct {
     Title string
     Body string
     Recent []string
+    Created string
+    Updated string
 }
 
 func (p *Page) Save() error {
@@ -29,7 +31,7 @@ func (p *Page) Save() error {
 }
 
 func LoadPage(title string) (*Page, error) {
-    row, err := db.SQL.Query("SELECT body FROM posts WHERE title = ?", title)
+    row, err := db.SQL.Query("SELECT created_at, updated_at, body FROM posts WHERE title = ?", title)
     if err != nil {
         return nil, err
     }
@@ -39,7 +41,7 @@ func LoadPage(title string) (*Page, error) {
     page.Title = title
 
     row.Next()
-    err = row.Scan(&page.Body)
+    err = row.Scan(&page.Created, &page.Updated, &page.Body)
     if err != nil {
         return nil, err
     }
