@@ -2,9 +2,14 @@ body {
     font-family: Arial;
 }
 
+h1 {
+    background-color: lightgreen;
+    padding: 10px;
+}
+
 .post {
-    width: 80%;
     float: right;
+    width: 85%;
     padding: 10px;
     font-size: 20;
     white-space: pre-line;
@@ -15,14 +20,20 @@ body {
 }
 
 #recent {
-    float: top;
-    width: 15%;
-    padding: 10px;
-    margin: 20px;
+    width: 10%;
+    display: inline-block;
+    border: 2px solid;
+    border-color: black;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+    position: fixed;
+    background-color: lightgray;
 }
 
 #recent li {
-    padding: 3px;
+    padding: 10px;
 }
 
 #recent li:hover {
@@ -30,6 +41,10 @@ body {
     font-weight: bold;
 }
 
-a:visited {
+#recent a {
+    display: block;
+}
+
+#recent a:visited {
     color: black;
 }

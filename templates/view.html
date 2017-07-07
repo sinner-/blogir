@@ -5,16 +5,16 @@
     </head>
     <body>
         <h1>{{.Title}}</h1>
+        <ul id="recent">
+            {{range .Recent}}
+            <li><a href="/view/{{.}}">{{.}}</a></li>
+            {{end}}
+        </ul>
         <div class="post">
             {{printf "%s" .Body}}
             <br/>
             [<a id="edit" href="/edit/{{.Title}}">edit</a>]
             <p>Created: {{.Created}}, Updated: {{.Updated}}</p>
         </div>
-        <ul id="recent">
-            {{range .Recent}}
-            <li><a href="/view/{{.}}">{{.}}</a></li>
-            {{end}}
-        </ul>
-    </body>
+   </body>
 </html>
