@@ -9,7 +9,7 @@ import (
     "blogir/model"
 )
 
-var validTitle = regexp.MustCompile("([A-Za-z0-9]+)$")
+var validTitle = regexp.MustCompile("^[A-Za-z0-9 -]+$")
 var validFile = regexp.MustCompile("((css|img)/[A-Za-z]+\\.[A-Za-z]{3})$")
 
 func getTitle(url string, path string) (string, error) {
