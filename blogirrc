@@ -8,3 +8,7 @@ export BLOGIR_DB_USERNAME="root"
 export BLOGIR_DB_HOST="127.0.0.1"
 export BLOGIR_DB_PORT="3306"
 export BLOGIR_DB_NAME="blogir"
+
+#admin config
+export BLOGIR_ADMIN_USERNAME="admin"
+#export BLOGIR_ADMIN_PASSHASH='2b$12$.jI3h4odf/sbiKHzUA643O0A51M8FYaetQGVhAbOsCRys2PpW40MC'

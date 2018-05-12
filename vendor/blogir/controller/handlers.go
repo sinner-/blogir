@@ -6,6 +6,10 @@ import (
     "net/http"
     "log"
     "regexp"
+    "crypto/hmac"
+    "crypto/sha512"
+    "encoding/base64"
+    "golang.org/x/crypto/bcrypt"
     "blogir/model"
 )
 
@@ -25,7 +29,7 @@ func getTitle(url string, path string) (string, error) {
 
 func getFile(url string) (string, error) {
     file := url[len("/static/"):]
-    if !validFile.MatchString(file) {
+    if file != "login.html" && !validFile.MatchString(file) {
         return "", errors.New("Requested invalid static file.")
     }
     return file, nil
@@ -52,7 +56,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
     }
     p, err := model.LoadPage(title)
     if err != nil {
-        http.Redirect(w, r, fmt.Sprintf("/edit/%s", title), http.StatusFound)
+        http.Redirect(w, r, fmt.Sprintf("/admin/edit/%s", title), http.StatusFound)
         return
     }
     p.Recent, err = model.LoadRecent()
@@ -61,7 +65,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request) {
-    title, err := getTitle(r.URL.Path, "/save/")
+    title, err := getTitle(r.URL.Path, "/admin/save/")
     if err != nil {
         http.Error(w, err.Error(), http.StatusNotFound)
         return
@@ -78,7 +82,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request) {
-    title, err := getTitle(r.URL.Path, "/edit/")
+    title, err := getTitle(r.URL.Path, "/admin/edit/")
     if err != nil {
         http.Error(w, err.Error(), http.StatusNotFound)
         return
@@ -91,3 +95,14 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
     renderPage(w, "edit", p)
 }
 
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+  if r.FormValue("username") == CONF.adminUsername && bcrypt.CompareHashAndPassword(CONF.adminPasshash, []byte(r.FormValue("password"))) == nil {
+      hash := hmac.New(sha512.New, CONF.cookieSigningKey)
+      hash.Write(CONF.adminCookieString)
+      cookie := http.Cookie{Name: "auth", Value: base64.StdEncoding.EncodeToString(hash.Sum(nil))}
+      http.SetCookie(w, &cookie)
+      http.Redirect(w, r, "/view/index", http.StatusFound)
+  } else {
+      http.Error(w, "Bad login.", http.StatusForbidden)
+  }
+}

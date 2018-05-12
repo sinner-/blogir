@@ -6,8 +6,9 @@ import (
 
 func loadRoutes() {
     http.Handle("/", pipeline(indexHandler))
+    http.Handle("/login", pipeline(loginHandler))
     http.Handle("/static/", pipeline(staticHandler))
     http.Handle("/view/", pipeline(viewHandler))
-    http.Handle("/edit/", pipeline(editHandler))
-    http.Handle("/save/", pipeline(saveHandler))
+    http.Handle("/admin/edit/", pipeline(editHandler))
+    http.Handle("/admin/save/", pipeline(saveHandler))
 }

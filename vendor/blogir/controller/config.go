@@ -6,8 +6,12 @@ import (
 )
 
 type serverConfig struct {
-    listenURL   string
-    dbURL       string
+    listenURL         string
+    dbURL             string
+    adminUsername     string
+    adminPasshash     []byte
+    cookieSigningKey  []byte
+    adminCookieString []byte
 }
 
 var (
@@ -50,7 +54,7 @@ func genDBURL() string {
     }
 
     dbName, present := os.LookupEnv("BLOGIR_DB_NAME")
-    if !present || dbPort == "" {
+    if !present {
         dbName = "blogir"
     }
 
@@ -60,4 +64,34 @@ func genDBURL() string {
 func loadConfig() {
     CONF.listenURL = genListenURL()
     CONF.dbURL = genDBURL()
+
+    adminUsername, present := os.LookupEnv("BLOGIR_ADMIN_USERNAME")
+    if !present {
+      adminUsername = "admin"
+    }
+
+    CONF.adminUsername = adminUsername
+
+    adminPasshash, present := os.LookupEnv("BLOGIR_ADMIN_PASSHASH")
+    if !present {
+        fmt.Println("You must specify BLOGIR_ADMIN_PASSHASH environment variable.")
+        os.Exit(1)
+    }
+
+    CONF.adminPasshash = []byte(adminPasshash)
+
+    cookieSigningKey, present := os.LookupEnv("BLOGIR_COOKIE_SIGNING_KEY")
+    if !present {
+        fmt.Println("You must specify BLOGIR_COOKIE_SIGNING_KEY environment variable.")
+        os.Exit(1)
+    }
+
+    CONF.cookieSigningKey = []byte(cookieSigningKey)
+
+    adminCookieString, present := os.LookupEnv("BLOGIR_ADMIN_COOKIE_STRING")
+    if !present {
+        adminCookieString = "admin"
+    }
+
+    CONF.adminCookieString = []byte(adminCookieString)
 }

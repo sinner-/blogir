@@ -7,8 +7,8 @@ import (
 func pipeline(h http.HandlerFunc) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         logger(r)
-        h.ServeHTTP(w, r)
+        if isAuthenticated(w, r) {
+          h.ServeHTTP(w, r)
+        }
     })
 }
-
-

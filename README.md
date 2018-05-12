@@ -17,5 +17,6 @@ As user:
   * `cd $GOPATH/src/github.com/sinner-/blogir`
   * `go get`
   * `go install`
-  * Optionally, edit blogirrc env vars and `source blogirrc`
+  * Set the BLOGIR_ADMIN_PASSHASH environment variable with a bcrypt hashed password. blogirrc has an example password of "password".
+  * Optionally, edit blogirrc env vars and `source blogirrc`.
   * `blogir`
