@@ -8,8 +8,6 @@ As root:
   * `dnf install golang mariadb-server`
   * `mysql -u root`
     * `CREATE DATABASE blogir;`
-    * `USE blogir;`
-    * `CREATE TABLE posts(title VARCHAR(255) NOT NULL, body LONGTEXT NOT NULL)`;
   
 As user:
   * `mkdir -p ~/Development/go/src/github.com/sinner-`
