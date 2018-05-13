@@ -14,7 +14,7 @@ import (
 )
 
 var validTitle = regexp.MustCompile("^[A-Za-z0-9 -]+$")
-var validFile = regexp.MustCompile("((css|img)/[A-Za-z]+\\.[A-Za-z]{3})$")
+var validFile = regexp.MustCompile("((css|img|html)/[A-Za-z]+\\.(css|jpg|html))$")
 
 func getTitle(url string, path string) (string, error) {
     title := url[len(path):]
@@ -29,7 +29,7 @@ func getTitle(url string, path string) (string, error) {
 
 func getFile(url string) (string, error) {
     file := url[len("/static/"):]
-    if file != "login.html" && !validFile.MatchString(file) {
+    if !validFile.MatchString(file) {
         return "", errors.New("Requested invalid static file.")
     }
     return file, nil
@@ -60,6 +60,8 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     p.Recent, err = model.LoadRecent()
+
+    p.Authenticated = isAuthenticated(r)
 
     renderPage(w, "view", p)
 }
@@ -105,4 +107,8 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
   } else {
       http.Error(w, "Bad login.", http.StatusForbidden)
   }
+}
+
+func newHandler(w http.ResponseWriter, r *http.Request) {
+    http.Redirect(w, r, fmt.Sprintf("/admin/edit/%s", r.FormValue("title")), http.StatusFound)
 }

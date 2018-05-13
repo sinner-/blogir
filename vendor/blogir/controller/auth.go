@@ -8,20 +8,14 @@ import (
     "encoding/base64"
 )
 
-func isAuthenticated(w http.ResponseWriter, r * http.Request) (bool) {
-    if !strings.HasPrefix(r.URL.Path, "/admin") {
-        return true
-    }
-
+func isAuthenticated(r * http.Request) (bool) {
     cookie, err := r.Cookie("auth")
     if err != nil {
-        http.Redirect(w, r, "/static/login.html", http.StatusFound)
         return false
     }
 
     messageMAC, err := base64.StdEncoding.DecodeString(cookie.Value)
     if err != nil {
-        http.Redirect(w, r, "/static/login.html", http.StatusFound)
         return false
     }
 
@@ -30,4 +24,10 @@ func isAuthenticated(w http.ResponseWriter, r * http.Request) (bool) {
     expectedMAC := mac.Sum(nil)
 
     return hmac.Equal(messageMAC, expectedMAC)
+}
+
+func serveAuthenticated(w http.ResponseWriter, r * http.Request) {
+    if strings.HasPrefix(r.URL.Path, "/admin") && !isAuthenticated(r) {
+        http.Redirect(w, r, "/static/html/login.html", http.StatusFound)
+    }
 }

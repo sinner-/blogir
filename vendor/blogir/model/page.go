@@ -5,11 +5,12 @@ import (
 )
 
 type Page struct {
-    Title string
-    Body string
-    Recent []string
-    Created string
-    Updated string
+    Title         string
+    Body          string
+    Recent        []string
+    Created       string
+    Updated       string
+    Authenticated bool
 }
 
 func (p *Page) Save() error {
