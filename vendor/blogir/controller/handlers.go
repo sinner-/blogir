@@ -36,7 +36,15 @@ func getFile(url string) (string, error) {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-    http.Redirect(w, r, "/view/index", http.StatusFound)
+    i, err := model.LoadIndex()
+    if err != nil {
+      http.Error(w, err.Error(), http.StatusNotFound)
+      return
+    }
+
+    i.Authenticated = isAuthenticated(r)
+
+    renderIndex(w, i)
 }
 
 func staticHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +67,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
         http.Redirect(w, r, fmt.Sprintf("/admin/edit/%s", title), http.StatusFound)
         return
     }
-    p.Recent, err = model.LoadRecent()
 
     p.Authenticated = isAuthenticated(r)
 
@@ -103,7 +110,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
       hash.Write(CONF.adminCookieString)
       cookie := http.Cookie{Name: "auth", Value: base64.StdEncoding.EncodeToString(hash.Sum(nil))}
       http.SetCookie(w, &cookie)
-      http.Redirect(w, r, "/view/index", http.StatusFound)
+      http.Redirect(w, r, "/", http.StatusFound)
   } else {
       http.Error(w, "Bad login.", http.StatusForbidden)
   }

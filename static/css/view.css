@@ -1,15 +1,18 @@
 body {
     font-family: Courier;
+    font-size: 100%;
+    width: 33%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h1 {
     background-color: lightgreen;
     padding: 10px;
+    text-align: center;
 }
 
 .post {
-    float: right;
-    width: 85%;
     padding: 10px;
     font-size: 20;
     white-space: pre-line;
@@ -19,32 +22,35 @@ h1 {
     background-color: gray;
 }
 
-#recent {
-    width: 10%;
-    display: inline-block;
+#entries {
+    text-align: center;
+    display: block;
     border: 2px solid;
     border-color: black;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    overflow: auto;
-    position: fixed;
     background-color: lightgray;
 }
 
-#recent li {
-    padding: 10px;
-}
-
-#recent li:hover {
+#entries li:hover {
     background-color: gray;
     font-weight: bold;
 }
 
-#recent a {
+#entries li {
     display: block;
+    padding: 10px;
 }
 
-#recent a:visited {
+#entries a {
+  color: black;
+}
+
+#entries a:visited {
     color: black;
+}
+
+@media screen and (max-device-width: 480px) {
+  body {
+    width: 90%;
+    font-size: 300%;
+  }
 }

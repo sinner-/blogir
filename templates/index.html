@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>Index</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/view.css">
+    </head>
+    <body>
+        <h1>Index</h1>
+        <div class="index">
+            <br/>
+            <ul id="entries">
+            {{range .Entries}}
+              <li class="entry"><a href="/view/{{.Title}}">{{.Title}}</a> - Created: {{.Created}}</li>
+            {{end}}
+            </ul>
+            <br/>
+            {{if .Authenticated}}
+            <form action="/admin/new" method="POST">
+                Title: <input type="text" name="title"/> <input type="submit" value="New Post"/>
+            </form>
+            {{end}}
+        </div>
+   </body>
+</html>

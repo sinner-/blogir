@@ -5,21 +5,20 @@
     </head>
     <body>
         <h1>{{.Title}}</h1>
-        <ul id="recent">
-            {{range .Recent}}
-            <li><a href="/view/{{.}}">{{.}}</a></li>
-            {{end}}
-        </ul>
+        <div class="index">
+          <a href="/index">Index</a>
+        </div>
         <div class="post">
             {{printf "%s" .Body}}
             <br/>
+            <p>
+              Created: {{.Created}}
+              Updated: {{.Updated}}
+            </p>
             {{if .Authenticated}}
             [<a id="edit" href="/admin/edit/{{.Title}}">edit</a>]
-            <form action="/admin/new" method="POST">
-                Title: <input type="text" name="title"/> <input type="submit" value="New Post"/>
-            </form>
             {{end}}
-            <p>Created: {{.Created}}, Updated: {{.Updated}}</p>
+
         </div>
    </body>
 </html>
