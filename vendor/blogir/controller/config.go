@@ -6,6 +6,7 @@ import (
 )
 
 type serverConfig struct {
+    blogName          string
     listenURL         string
     dbURL             string
     adminUsername     string
@@ -94,4 +95,12 @@ func loadConfig() {
     }
 
     CONF.adminCookieString = []byte(adminCookieString)
+
+    blogName, present := os.LookupEnv("BLOGIR_BLOG_NAME")
+    if !present {
+        blogName = "Sina's Blog"
+    }
+
+    CONF.blogName = blogName
+
 }

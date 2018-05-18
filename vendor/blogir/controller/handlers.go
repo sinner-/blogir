@@ -13,7 +13,7 @@ import (
     "blogir/model"
 )
 
-var validTitle = regexp.MustCompile("^[A-Za-z0-9 -]+$")
+var validTitle = regexp.MustCompile("^[A-Za-z0-9 -!,.]+$")
 var validFile = regexp.MustCompile("((css|img|html)/[A-Za-z]+\\.(css|jpg|html))$")
 
 func getTitle(url string, path string) (string, error) {
@@ -38,10 +38,11 @@ func getFile(url string) (string, error) {
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     i, err := model.LoadIndex()
     if err != nil {
-      http.Error(w, err.Error(), http.StatusNotFound)
-      return
+        http.Error(w, err.Error(), http.StatusNotFound)
+        return
     }
 
+    i.Name = CONF.blogName
     i.Authenticated = isAuthenticated(r)
 
     renderIndex(w, i)

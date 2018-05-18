@@ -1,0 +1,62 @@
+body {
+    width: 33%;
+    font-family: Arial;
+    font-size: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-device-width: 640px) {
+  body {
+    width: 90%;
+    font-size: 350%;
+  }
+}
+
+h1 {
+    background-color: lightgreen;
+    padding: 50px;
+    text-align: center;
+    border: 2px solid;
+    border-color: green;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+a {
+    color: black;
+    line-height: 150%
+}
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    background-color: gray;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.post {
+    white-space: pre-line;
+}
+
+#entries {
+    margin-top: 0px;
+    text-align: center;
+    display: block;
+    border: 2px solid;
+    border-color: black;
+    background-color: lightgray;
+    list-style: none;
+    padding: 0px;
+}
+
+#entries li {
+    padding: 20px;
+}
+
+#entries li:hover {
+    background-color: gray;
+}

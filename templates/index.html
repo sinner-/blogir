@@ -1,15 +1,18 @@
 <html>
     <head>
-        <title>Index</title>
-        <link rel="stylesheet" type="text/css" href="../static/css/view.css">
+        <title>{{.Name}}</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
     </head>
     <body>
-        <h1>Index</h1>
+        <h1>{{.Name}}</h1>
         <div class="index">
             <br/>
             <ul id="entries">
             {{range .Entries}}
-              <li class="entry"><a href="/view/{{.Title}}">{{.Title}}</a> - Created: {{.Created}}</li>
+              <li class="entry">
+                <a href="/view/{{.Title}}">{{.Title}}</a><br/>
+                {{.Created}}
+              </li>
             {{end}}
             </ul>
             <br/>

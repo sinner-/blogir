@@ -2,7 +2,7 @@
 Golang weblog platform
 
 ## Development environment setup
-### Fedora 24
+### Fedora 27
 
 As root:
   * `dnf install golang mariadb-server`

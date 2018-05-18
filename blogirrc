@@ -13,3 +13,6 @@ export BLOGIR_DB_NAME="blogir"
 export BLOGIR_ADMIN_USERNAME="admin"
 export BLOGIR_ADMIN_PASSHASH='$2b$12$2NxjZXUd5JNIi7kqn4ZhFuLWVOjQrpYMrllW19kG1ph5fNQQeHBu.'
 export BLOGIR_COOKIE_SIGNING_KEY="0d7677b2-ed16-426c-a412-383f18fe7f79"
+
+#blog config
+export BLOGIR_BLOG_NAME="Indi's Blog"
