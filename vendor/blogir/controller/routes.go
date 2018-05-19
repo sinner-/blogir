@@ -12,4 +12,5 @@ func loadRoutes() {
     http.Handle("/admin/edit/", pipeline(editHandler))
     http.Handle("/admin/save/", pipeline(saveHandler))
     http.Handle("/admin/new", pipeline(newHandler))
+    http.Handle("/admin/delete/", pipeline(deleteHandler))
 }

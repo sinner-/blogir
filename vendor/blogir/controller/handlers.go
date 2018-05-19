@@ -91,6 +91,21 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, fmt.Sprintf("/view/%s", title), http.StatusFound)
 }
 
+func deleteHandler(w http.ResponseWriter, r *http.Request) {
+    title, err := getTitle(r.URL.Path, "/admin/delete/")
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusNotFound)
+        return
+    }
+
+    err = model.DeletePage(title)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusNotFound)
+        return
+    }
+    http.Redirect(w, r, "/index", http.StatusFound)
+}
+
 func editHandler(w http.ResponseWriter, r *http.Request) {
     title, err := getTitle(r.URL.Path, "/admin/edit/")
     if err != nil {

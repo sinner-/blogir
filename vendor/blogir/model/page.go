@@ -49,3 +49,12 @@ func LoadPage(title string) (*Page, error) {
 
     return page, nil
 }
+
+func DeletePage(title string) (error) {
+  _, err := db.SQL.Query("DELETE from posts WHERE title = ?", title)
+  if err != nil {
+    return err
+  }
+
+  return nil
+}
