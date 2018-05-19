@@ -8,7 +8,14 @@ import (
     "blogir/model"
 )
 
-var templates = template.Must(template.ParseGlob("templates/*.html"))
+var (
+    funcMap = template.FuncMap{"toHTML": toHTML}
+    templates = template.Must(template.New("").Funcs(funcMap).ParseGlob("templates/*.html"))
+)
+
+func toHTML(html string) template.HTML {
+  return template.HTML(html)
+}
 
 func renderPage(w http.ResponseWriter, tmpl string, p *model.Page) {
     err := templates.ExecuteTemplate(w, fmt.Sprintf("%s.html", tmpl), p)
